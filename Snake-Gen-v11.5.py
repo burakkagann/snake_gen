@@ -449,8 +449,7 @@ def run_generation():
     snakes = evolve_snakes(snakes)
 
 
-log_filename = "Snake_GA_Pygame/training_log.txt"
-
+log_filename = "training_log.txt"
 
 def log_and_print(*args, **kwargs):
     """ Prints output to the console and also writes it to a log file. """
