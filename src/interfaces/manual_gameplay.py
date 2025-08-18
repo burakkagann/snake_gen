@@ -1,36 +1,11 @@
 import pygame
-import random
 import sys
 import time
+from ..game.config import *
+from ..core.snake_manual import ManualKeysSnake, get_manual_direction_from_key
 
 # Initialize Pygame
 pygame.init()
-
-# Game Constants
-WIDTH, HEIGHT = 600, 600
-TOP_BAR_HEIGHT = 50
-SIDE_BAR_WIDTH = 200
-PADDING = 20
-CELL_SIZE = 20
-GAP = 2
-FPS = 10
-
-# Colors (Same as AI-trained version)
-WHITE = (255, 255, 255)
-BACKGROUND_GRAY = (215, 210, 203)
-GRAY = (100, 100, 100)
-GREEN = (21, 71, 52)  # Snake color
-RED = (128, 5, 0)  # Food color
-BLACK = (0, 0, 0)  # Background
-BROWN = (139, 69, 19)  # Walls
-
-# Directions (UP, DOWN, LEFT, RIGHT)
-DIRECTIONS = {
-    pygame.K_UP: (0, -1),
-    pygame.K_DOWN: (0, 1),
-    pygame.K_LEFT: (-1, 0),
-    pygame.K_RIGHT: (1, 0),
-}
 
 # Setup Game Window (Same size and layout as AI mode)
 screen = pygame.display.set_mode((WIDTH, HEIGHT + TOP_BAR_HEIGHT))
@@ -38,85 +13,7 @@ pygame.display.set_caption("Snake - Manual Play (Arrow Keys)")
 clock = pygame.time.Clock()
 font = pygame.font.SysFont(None, 30)
 
-# Adjust game area with padding
-GAME_AREA_X = PADDING
-GAME_AREA_Y = PADDING + TOP_BAR_HEIGHT
-GAME_AREA_WIDTH = WIDTH - 2 * PADDING
-GAME_AREA_HEIGHT = HEIGHT - 2 * PADDING
-
-
-class ManualKeysSnake:
-    def __init__(self):
-        # ✅ Initialize Snake First
-        self.snake = [(GAME_AREA_X + GAME_AREA_WIDTH // 2,
-                       GAME_AREA_Y + GAME_AREA_HEIGHT // 2)]
-        self.direction = DIRECTIONS[pygame.K_RIGHT]
-        self.score = 0
-        self.length = 0
-        self.alive = True
-        self.start_time = time.time()
-        self.last_food_time = time.time()
-        self.moves_made = 0  # ✅ Track total moves
-        self.food_collected = 0  # ✅ Track total food eaten
-
-
-        # ✅ Define Border Walls Before Spawning Food
-        self.border_walls = set()
-        for x in range(GAME_AREA_X - CELL_SIZE, GAME_AREA_X + GAME_AREA_WIDTH + CELL_SIZE, CELL_SIZE):
-            self.border_walls.add((x, GAME_AREA_Y - CELL_SIZE))  # Top border
-            self.border_walls.add(
-                (x, GAME_AREA_Y + GAME_AREA_HEIGHT))  # Bottom border
-
-        for y in range(GAME_AREA_Y - CELL_SIZE, GAME_AREA_Y + GAME_AREA_HEIGHT + CELL_SIZE, CELL_SIZE):
-            self.border_walls.add((GAME_AREA_X - CELL_SIZE, y))  # Left border
-            self.border_walls.add(
-                (GAME_AREA_X + GAME_AREA_WIDTH, y))  # Right border
-
-        # ✅ Now Spawn Food After Everything is Initialized
-        self.food = self.spawn_food()
-
-    def spawn_food(self):
-        while True:
-            food_x = random.randrange(
-                GAME_AREA_X, GAME_AREA_X + GAME_AREA_WIDTH, CELL_SIZE)
-            food_y = random.randrange(
-                GAME_AREA_Y, GAME_AREA_Y + GAME_AREA_HEIGHT, CELL_SIZE)
-            if (food_x, food_y) not in self.snake and (food_x, food_y) not in self.border_walls:
-                return food_x, food_y
-
-    def move(self):
-        head_x, head_y = self.snake[0]
-        new_head = (
-            head_x + self.direction[0] * CELL_SIZE, head_y + self.direction[1] * CELL_SIZE)
-
-        # **Fix Wall Collision Detection**
-        if (
-            new_head in self.snake  # Self-collision
-            or new_head[0] < GAME_AREA_X  # Hits left wall
-            or new_head[0] >= GAME_AREA_X + GAME_AREA_WIDTH  # Hits right wall
-            or new_head[1] < GAME_AREA_Y  # Hits top wall
-            # Hits bottom wall
-            or new_head[1] >= GAME_AREA_Y + GAME_AREA_HEIGHT
-        ):
-            self.alive = False
-            return  # ✅ Prevents further execution
-
-        # Move the snake
-        self.snake.insert(0, new_head)
-        self.moves_made += 1
-        
-        # **Fix Food Collection Detection**
-        if new_head == self.food:  # ✅ Checks correct position
-            self.score += 50
-            self.length += 1
-            self.food = self.spawn_food()
-            self.last_food_time = time.time()
-        else:
-            self.snake.pop()  # Move the snake
-
-        # **Fix Starvation Mechanism**
-        if time.time() - self.last_food_time > 10:
-            self.alive = False  # ✅ Only starve if 10s passes without food
+# ManualKeysSnake class now imported from snake_manual.py
 
 
 def draw_game(snake):
@@ -223,14 +120,10 @@ def run_manual_mode():
 
             # Handle Key Press for Direction Change
             if event.type == pygame.KEYDOWN:
-                if event.key in DIRECTIONS:
-                    new_direction = DIRECTIONS[event.key]
-                    # Prevent reversing
-                    if new_direction != (-snake.direction[0], -snake.direction[1]):
-                        snake.direction = new_direction
+                snake.direction = get_manual_direction_from_key(event.key, snake.direction)
 
         snake.move()
         draw_game(snake)
-        clock.tick(FPS)
+        clock.tick(MANUAL_FPS)
     action = show_game_over_screen(snake)
     return action
