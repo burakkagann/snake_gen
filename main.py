@@ -66,6 +66,63 @@ def draw_snake_length_visualization():
 # draw_game function moved to gameplay_interface.py
 
 
+def check_convergence(generation_fitness, generation_avg_fitness, window_size=5):
+    """Check if the population has converged based on fitness stability."""
+    if len(generation_fitness) < window_size:
+        return False, 0.0
+    
+    # Check fitness improvement over recent generations
+    recent_best = generation_fitness[-window_size:]
+    recent_avg = generation_avg_fitness[-window_size:]
+    
+    # Calculate variance in recent generations
+    best_variance = np.var(recent_best)
+    avg_variance = np.var(recent_avg)
+    
+    # Calculate improvement rate
+    if len(generation_fitness) > 1:
+        improvement_rate = (generation_fitness[-1] - generation_fitness[-window_size]) / generation_fitness[-window_size]
+    else:
+        improvement_rate = 1.0
+    
+    # Convergence criteria
+    has_converged = (
+        best_variance < 10.0 and  # Low variance in best fitness
+        avg_variance < 20.0 and    # Low variance in average fitness
+        abs(improvement_rate) < 0.05  # Less than 5% improvement
+    )
+    
+    return has_converged, improvement_rate
+
+
+def calculate_performance_metrics(snakes):
+    """Calculate comprehensive performance metrics for the current generation."""
+    metrics = {}
+    
+    # Basic statistics
+    fitnesses = [s.fitness_function() for s in snakes]
+    lengths = [s.length for s in snakes]
+    scores = [s.score for s in snakes]
+    
+    metrics['best_fitness'] = max(fitnesses) if fitnesses else 0
+    metrics['avg_fitness'] = np.mean(fitnesses) if fitnesses else 0
+    metrics['std_fitness'] = np.std(fitnesses) if fitnesses else 0
+    metrics['best_length'] = max(lengths) if lengths else 0
+    metrics['avg_length'] = np.mean(lengths) if lengths else 0
+    metrics['best_score'] = max(scores) if scores else 0
+    metrics['avg_score'] = np.mean(scores) if scores else 0
+    
+    # Population diversity
+    from src.core.snake_ai import calculate_population_diversity
+    metrics['diversity'] = calculate_population_diversity(snakes)
+    
+    # Success rate (snakes that collected at least one food)
+    successful_snakes = sum(1 for s in snakes if s.length > 0)
+    metrics['success_rate'] = successful_snakes / len(snakes) if snakes else 0
+    
+    return metrics
+
+
 def run_generation(snakes, generation_num=1):
     global generation_start_time, best_score_overall, best_length_overall
     generation_start_time = time.time()
@@ -87,48 +144,61 @@ def run_generation(snakes, generation_num=1):
         draw_game(screen, snakes, generation_start_time, generation_lengths, 
                   "train_ai", None, clock, generation_num)
 
-    # **Calculate Key Metrics**
+    # **Calculate Comprehensive Performance Metrics**
+    metrics = calculate_performance_metrics(snakes)
+    
+    # **Update Overall Bests**
     best_snake = max(snakes, key=lambda s: s.fitness_function(), default=None)
     if best_snake is not None:
-        # If this generation's snake is better, update overall
         if best_snake.score > best_score_overall:
             best_score_overall = best_snake.score
         if best_snake.length > best_length_overall:
             best_length_overall = best_snake.length
-    best_fitness = best_snake.fitness_function() if best_snake else 0
-    avg_fitness = np.mean([snake.fitness_function() for snake in snakes])
-
-    best_length = max((snake.length for snake in snakes), default=0)
-    avg_length = np.mean([snake.length for snake in snakes])
-
-    # **Retrieve Best Snake's Weights (Brain Parameters)**
+    
     best_weights = best_snake.brain if best_snake else np.zeros(9)
 
-    # **Print Generation Summary**
+    # **Enhanced Generation Summary with Performance Metrics**
     log_and_print("=" * 50)
-    log_and_print(f" Generation {len(generation_fitness) + 1} Summary ")
+    log_and_print(f" Generation {generation_num} Summary ")
     log_and_print("=" * 50)
-    log_and_print(f" Best Fitness Score: {best_fitness:.2f}")
-    log_and_print(f" Average Fitness Score: {avg_fitness:.2f}")
-    log_and_print(f" Best Length Achieved: {best_length}")
-    log_and_print(f" Average Length of Snakes: {avg_length:.2f}")
+    log_and_print(f" Best Fitness Score: {metrics['best_fitness']:.2f}")
+    log_and_print(f" Average Fitness Score: {metrics['avg_fitness']:.2f} (±{metrics['std_fitness']:.2f})")
+    log_and_print(f" Best Length Achieved: {metrics['best_length']}")
+    log_and_print(f" Average Length: {metrics['avg_length']:.2f}")
+    log_and_print(f" Population Diversity: {metrics['diversity']:.3f}")
+    log_and_print(f" Success Rate: {metrics['success_rate']*100:.1f}%")
     log_and_print("-" * 50)
-    log_and_print(" Inherited Weights (Brain Parameters)")
-    log_and_print(f"  - Food Bonus Weight: {best_weights[0]:.3f}")
-    log_and_print(f"  - Toward Food Weight: {best_weights[1]:.3f}")
-    log_and_print(f"  - Away Food Penalty: {best_weights[2]:.3f}")
-    log_and_print(f"  - Loop Penalty: {best_weights[3]:.3f}")
-    log_and_print(f"  - Survival Bonus: {best_weights[4]:.3f}")
-    log_and_print(f"  - Wall Penalty: {best_weights[5]:.3f}")
-    log_and_print(f"  - Exploration Bonus: {best_weights[6]:.3f}")
-    log_and_print(f"  - Momentum Bonus: {best_weights[7]:.3f}")
-    log_and_print(f"  - Dead-End Penalty: {best_weights[8]:.3f}")
+    
+    # Handle both 9-parameter and 15-parameter brains
+    if len(best_weights) == 15:
+        log_and_print(" Enhanced Neural Network (15 parameters)")
+        log_and_print(f"  - Hidden Layer Weights: {best_weights[:8]}")
+        log_and_print(f"  - Output Weights: {best_weights[8:12]}")
+        log_and_print(f"  - Biases: {best_weights[12:15]}")
+    else:
+        log_and_print(" Inherited Weights (Brain Parameters)")
+        log_and_print(f"  - Food Bonus Weight: {best_weights[0]:.3f}")
+        log_and_print(f"  - Toward Food Weight: {best_weights[1]:.3f}")
+        log_and_print(f"  - Away Food Penalty: {best_weights[2]:.3f}")
+        log_and_print(f"  - Loop Penalty: {best_weights[3]:.3f}")
+        log_and_print(f"  - Survival Bonus: {best_weights[4]:.3f}")
+        log_and_print(f"  - Wall Penalty: {best_weights[5]:.3f}")
+        log_and_print(f"  - Exploration Bonus: {best_weights[6]:.3f}")
+        log_and_print(f"  - Momentum Bonus: {best_weights[7]:.3f}")
+        log_and_print(f"  - Dead-End Penalty: {best_weights[8]:.3f}")
+    
+    # **Check for Convergence**
+    has_converged, improvement_rate = check_convergence(generation_fitness, generation_avg_fitness)
+    if has_converged:
+        log_and_print("-" * 50)
+        log_and_print(f" ⚠ Population appears to have converged (improvement rate: {improvement_rate*100:.1f}%)")
+    
     log_and_print("=" * 50)
 
     # **Store Data for Future Analysis**
-    generation_fitness.append(best_fitness)
-    generation_avg_fitness.append(avg_fitness)
-    generation_lengths.append(best_length)
+    generation_fitness.append(metrics['best_fitness'])
+    generation_avg_fitness.append(metrics['avg_fitness'])
+    generation_lengths.append(metrics['best_length'])
 
     # **Evolve Snakes for Next Generation**
     snakes = evolve_snakes(snakes, generation_fitness)
