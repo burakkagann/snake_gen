@@ -4,6 +4,7 @@ from src.core.snake_manual import ManualKeysSnake
 from src.core.snake_ai import SnakeAI, evolve_snakes, log_and_print
 from src.interfaces.training_interface import get_training_parameters, show_pretrained_models
 from src.interfaces.gameplay_interface import draw_game
+from src.interfaces.ui_components import *
 from src.game.game_modes import (handle_manual_mode, handle_training_mode, 
                                 handle_pretrained_mode, handle_quit_mode)
 import pygame
@@ -45,10 +46,6 @@ generation_lengths = []
 generation_avg_lengths = []
 
 
-# Configuration now imported from config.py
-
-# SnakeAI class now imported from snake_ai.py
-
 
 def draw_snake_length_visualization():
     """Displays the length of the best snake visually on the right side of the screen."""
@@ -69,8 +66,8 @@ def draw_snake_length_visualization():
 # draw_game function moved to gameplay_interface.py
 
 
-def run_generation():
-    global snakes, generation_start_time, best_score_overall, best_length_overall
+def run_generation(snakes, generation_num=1):
+    global generation_start_time, best_score_overall, best_length_overall
     generation_start_time = time.time()
     running = True
 
@@ -78,7 +75,7 @@ def run_generation():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
-                return
+                return snakes
 
         alive_snakes = [s for s in snakes if s.alive]
         if not alive_snakes:
@@ -88,7 +85,7 @@ def run_generation():
             snake.move()
 
         draw_game(screen, snakes, generation_start_time, generation_lengths, 
-                  "train_ai", None, clock)
+                  "train_ai", None, clock, generation_num)
 
     # **Calculate Key Metrics**
     best_snake = max(snakes, key=lambda s: s.fitness_function(), default=None)
@@ -135,13 +132,13 @@ def run_generation():
 
     # **Evolve Snakes for Next Generation**
     snakes = evolve_snakes(snakes, generation_fitness)
+    return snakes
 
 
-# Genetic algorithm functions now imported from snake_ai.py
 
 
 
-snakes = [SnakeAI() for _ in range(DEFAULT_SNAKE_POPULATION)]
+# Snake population will be initialized in training mode based on user input
 
 
 def show_game_over_screen(snake, mode="manual"):
@@ -215,80 +212,195 @@ def show_game_over_screen(snake, mode="manual"):
                     sys.exit()
 
 
-# get_training_parameters function moved to training_interface.py
 
 
-# show_pretrained_models function moved to training_interface.py
 
+def show_pretrained_game_over_screen(snake):
+    """Display enhanced pre-trained AI game over screen with futuristic styling."""
+    elapsed_time = round(time.time() - snake.start_time, 2)
+    
+    # Enhanced fonts matching training summary
+    font_large = load_retro_font(32)
+    font_small = load_retro_font(16)
+    button_font = load_retro_font(18)
+
+    # Game over screen loop
+    while True:
+        # Draw futuristic background with circuit pattern (danger theme)
+        screen.fill(DARK_BG)
+        draw_circuit_pattern(screen, grid_size=60, line_color=UI_DANGER, 
+                            line_alpha=30, animate=True)
+        
+        # Add grid overlay for consistency
+        draw_grid_overlay(screen, grid_size=40, line_color=UI_DANGER, line_alpha=10)
+        
+        # Account for sidebar in screen dimensions
+        total_width = WIDTH + SIDE_BAR_WIDTH
+        total_height = HEIGHT + TOP_BAR_HEIGHT
+        
+        # Enhanced title with mission terminated theme
+        draw_glow_text(screen, "MISSION TERMINATED", font_large, UI_DANGER, 
+                       total_width // 2, total_height // 2 - 120, glow_radius=1, glow_alpha=30, centered=True)
+
+        # Enhanced mission statistics with separate colors for headers and values
+        stats_data = [
+            ("MISSION DURATION", f"{elapsed_time:.1f}s", NEON_ORANGE, NEON_CYAN),
+            ("FINAL SCORE", str(snake.score), NEON_ORANGE, NEON_GREEN),
+            ("SNAKE LENGTH", str(snake.length), NEON_ORANGE, NEON_BLUE),
+            ("STATUS", "TERMINATED", NEON_ORANGE, UI_DANGER)
+        ]
+        
+        # Draw stats with separate colors for labels and values
+        stats_y = total_height // 2 - 60
+        for i, (label, value, label_color, value_color) in enumerate(stats_data):
+            # Draw label positioned left
+            label_text = f"{label}:"
+            draw_glow_text(screen, label_text, font_small, label_color, 
+                           total_width // 2 - 120, stats_y + i * 22, glow_radius=0, glow_alpha=0, centered=True)
+            # Draw value positioned right
+            draw_glow_text(screen, value, font_small, value_color, 
+                           total_width // 2 + 120, stats_y + i * 22, glow_radius=0, glow_alpha=0, centered=True)
+
+        # Enhanced button system with holographic styling
+        model_select_width = 220  # Much wider button for MODEL SELECT text
+        menu_button_width = 140   # Standard width for MENU
+        button_height = 50
+        button_spacing = 30
+        
+        # Calculate button positions centered on total screen with different widths
+        total_button_width = model_select_width + menu_button_width + button_spacing
+        start_x = (total_width - total_button_width) // 2
+        button_y = total_height // 2 + 80
+        
+        # Define button rectangles with different widths
+        model_select_button = pygame.Rect(start_x, button_y, model_select_width, button_height)
+        menu_button = pygame.Rect(start_x + model_select_width + button_spacing, button_y, menu_button_width, button_height)
+        
+        # Hover detection
+        mouse_pos = pygame.mouse.get_pos()
+        model_select_hovered = model_select_button.collidepoint(mouse_pos)
+        menu_hovered = menu_button.collidepoint(mouse_pos)
+        
+        # Draw holographic buttons with enhanced styling
+        draw_holographic_button(screen, model_select_button, "MODEL SELECT", button_font, 
+                               NEON_BLUE, NEON_CYAN, WHITE, model_select_hovered)
+        draw_holographic_button(screen, menu_button, "MENU", button_font, 
+                               UI_BORDER, UI_HIGHLIGHT, WHITE, menu_hovered)
+        
+        # Add energy nodes in corners for futuristic effect
+        corner_positions = [
+            (50, 50), (total_width - 50, 50),
+            (50, total_height - 50), (total_width - 50, total_height - 50)
+        ]
+        draw_energy_nodes(screen, corner_positions, UI_DANGER, pulse=True)
+        
+        # Add scan lines overlay for retro terminal effect
+        draw_scan_lines(screen, line_spacing=10, line_alpha=12, animate=True)
+        
+        pygame.display.flip()
+        
+        # Handle events
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if model_select_button.collidepoint(event.pos):
+                    return "model_selection"
+                elif menu_button.collidepoint(event.pos):
+                    return "menu"
 
 
 def show_training_summary(best_score, best_length, training_time):
-    screen.fill(BACKGROUND_GRAY)
-    font_large = pygame.font.SysFont(None, 50)
-    font_small = pygame.font.SysFont(None, 30)
+    """Display enhanced training completion screen with futuristic styling."""
+    # Enhanced fonts matching manual gameplay
+    font_large = load_retro_font(32)
+    font_small = load_retro_font(16)
+    button_font = load_retro_font(18)
 
-    # Title
-    title_text = font_large.render("Training Complete", True, BLACK)
-    screen.blit(title_text, (WIDTH // 2 -
-                title_text.get_width() // 2, HEIGHT // 3))
-
-    # Stats
-    stats_text = [
-        f"Final Best Score: {best_score_overall}",
-        f"Final Best Length: {best_length_overall}",
-        f"Total Training Time: {training_time:.2f}s"
-    ]
-    stats_start_y = HEIGHT // 2 - 40
-    for i, text_line in enumerate(stats_text):
-        stat_render = font_small.render(text_line, True, BLACK)
-        screen.blit(stat_render, (WIDTH // 2 - stat_render.get_width() // 2,
-                                  stats_start_y + i * 40))
-
-    # --- Define Buttons in a Single Pass ---
-    button_width = 120
-    button_height = 40
-    button_spacing = 20
-
-    # total width for 4 buttons = 4 * button_width + 3 * button_spacing
-    total_button_width = 4 * button_width + 3 * button_spacing
-    start_x = (WIDTH - total_button_width) // 2
-    y = int(HEIGHT * 0.75)  # 75% down the screen
-
-    # Create rects side by side
-    menu_button = pygame.Rect(start_x, y, button_width, button_height)
-    pretrain_button = pygame.Rect(
-        start_x + (button_width + button_spacing), y, button_width, button_height
-    )
-    replay_button = pygame.Rect(
-        start_x + 2*(button_width +
-                     button_spacing), y, button_width, button_height
-    )
-    quit_button = pygame.Rect(
-        start_x + 3*(button_width +
-                     button_spacing), y, button_width, button_height
-    )
-
-    # Draw them
-    pygame.draw.rect(screen, BROWN, menu_button, border_radius=10)
-    pygame.draw.rect(screen, BLUE, pretrain_button, border_radius=10)
-    pygame.draw.rect(screen, GREEN, replay_button, border_radius=10)
-    pygame.draw.rect(screen, RED, quit_button, border_radius=10)
-
-    # Button text
-    def draw_button_text(rect, text):
-        text_surf = font_small.render(text, True, WHITE)
-        screen.blit(text_surf, (rect.x + rect.width // 2 - text_surf.get_width() // 2,
-                                rect.y + rect.height // 2 - text_surf.get_height() // 2))
-
-    draw_button_text(menu_button, "Menu")
-    draw_button_text(pretrain_button, "Pre-Train")
-    draw_button_text(replay_button, "Replay")
-    draw_button_text(quit_button, "Quit")
-
-    pygame.display.flip()
-
-    # --- Wait for Clicks ---
+    # Training completion screen loop
     while True:
+        # Draw futuristic background with circuit pattern
+        screen.fill(DARK_BG)
+        draw_circuit_pattern(screen, grid_size=60, line_color=UI_SUCCESS, 
+                            line_alpha=30, animate=True)
+        
+        # Add grid overlay for consistency
+        draw_grid_overlay(screen, grid_size=40, line_color=NEON_GREEN, line_alpha=10)
+        
+        # Account for sidebar in screen dimensions
+        total_width = WIDTH + SIDE_BAR_WIDTH
+        total_height = HEIGHT + TOP_BAR_HEIGHT
+        
+        # Enhanced title with reduced glow for thinner text
+        draw_glow_text(screen, "TRAINING COMPLETE", font_large, UI_SUCCESS, 
+                       total_width // 2, total_height // 2 - 120, glow_radius=1, glow_alpha=30, centered=True)
+
+        # Enhanced training statistics with separate colors for headers and values
+        stats_data = [
+            ("TRAINING DURATION", f"{training_time:.1f}s", NEON_ORANGE, NEON_CYAN),
+            ("BEST SCORE ACHIEVED", str(best_score_overall), NEON_ORANGE, NEON_GREEN),
+            ("LONGEST LENGTH", str(best_length_overall), NEON_ORANGE, NEON_BLUE),
+            ("STATUS", "COMPLETE", NEON_ORANGE, UI_SUCCESS)
+        ]
+        
+        # Draw stats with separate colors for labels and values, increased spacing to prevent overlap
+        stats_y = total_height // 2 - 60
+        for i, (label, value, label_color, value_color) in enumerate(stats_data):
+            # Draw label with no glow for thinner appearance, positioned further left
+            label_text = f"{label}:"
+            draw_glow_text(screen, label_text, font_small, label_color, 
+                           total_width // 2 - 120, stats_y + i * 22, glow_radius=0, glow_alpha=0, centered=True)
+            # Draw value with no glow for thinner appearance, positioned further right
+            draw_glow_text(screen, value, font_small, value_color, 
+                           total_width // 2 + 120, stats_y + i * 22, glow_radius=0, glow_alpha=0, centered=True)
+
+        # Enhanced button system with holographic styling
+        button_width, button_height = 140, 50
+        pretrain_width = 160  # Wider button for PRE-TRAIN text
+        button_spacing = 30
+        
+        # Calculate button positions centered on total screen with varying widths
+        total_button_width = 3 * button_width + pretrain_width + 3 * button_spacing
+        start_x = (total_width - total_button_width) // 2
+        button_y = total_height // 2 + 80
+        
+        # Define button rectangles with wider PRE-TRAIN button
+        menu_button = pygame.Rect(start_x, button_y, button_width, button_height)
+        pretrain_button = pygame.Rect(start_x + button_width + button_spacing, button_y, pretrain_width, button_height)
+        replay_button = pygame.Rect(start_x + button_width + pretrain_width + 2 * button_spacing, button_y, button_width, button_height)
+        quit_button = pygame.Rect(start_x + 2 * button_width + pretrain_width + 3 * button_spacing, button_y, button_width, button_height)
+        
+        # Hover detection
+        mouse_pos = pygame.mouse.get_pos()
+        menu_hovered = menu_button.collidepoint(mouse_pos)
+        pretrain_hovered = pretrain_button.collidepoint(mouse_pos)
+        replay_hovered = replay_button.collidepoint(mouse_pos)
+        quit_hovered = quit_button.collidepoint(mouse_pos)
+        
+        # Draw holographic buttons with enhanced styling
+        draw_holographic_button(screen, menu_button, "MENU", button_font, 
+                               UI_BORDER, UI_HIGHLIGHT, WHITE, menu_hovered)
+        draw_holographic_button(screen, pretrain_button, "PRE-TRAIN", button_font, 
+                               NEON_BLUE, NEON_CYAN, WHITE, pretrain_hovered)
+        draw_holographic_button(screen, replay_button, "REPLAY", button_font, 
+                               UI_SUCCESS, NEON_GREEN, WHITE, replay_hovered)
+        draw_holographic_button(screen, quit_button, "QUIT", button_font, 
+                               UI_DANGER, CYBER_PINK, WHITE, quit_hovered)
+        
+        # Add energy nodes in corners for futuristic effect
+        corner_positions = [
+            (50, 50), (total_width - 50, 50),
+            (50, total_height - 50), (total_width - 50, total_height - 50)
+        ]
+        draw_energy_nodes(screen, corner_positions, UI_SUCCESS, pulse=True)
+        
+        # Add scan lines overlay for retro terminal effect
+        draw_scan_lines(screen, line_spacing=10, line_alpha=12, animate=True)
+        
+        pygame.display.flip()
+        
+        # Handle events
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -327,14 +439,14 @@ def run_pretrained_ai(model_params):
         draw_game(screen, snakes, generation_start_time, generation_lengths,
                   "pretrained_ai", model_params, clock)
 
-    # **Show Game Over Screen and Handle Replay**
-    action = show_game_over_screen(snake, mode="model_selection")
+    # **Show Enhanced Game Over Screen and Handle Replay**
+    action = show_pretrained_game_over_screen(snake)
     if action == "model_selection":
         # Return to Pre-Trained Model Selection
         model_name, model_params = show_pretrained_models()
         run_pretrained_ai(model_params)  # Restart with selected model
     elif action == "menu":
-        selection = menu_screen()  # Return to main menu
+        return  # Return to main menu
 
 
 # **Show the menu before running the game**
@@ -346,7 +458,7 @@ def main():
         if selection == "manual":
             handle_manual_mode()
 
-        elif selection == "train":
+        elif selection == "train": 
             result = handle_training_mode(
                 best_score_overall, best_length_overall,
                 generation_fitness, generation_avg_fitness,
@@ -366,3 +478,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

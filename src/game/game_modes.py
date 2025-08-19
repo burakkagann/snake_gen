@@ -53,8 +53,8 @@ def run_training_session(snakes_per_gen, num_generations, generation_fitness,
         # Log generation progress
         log_and_print(f"Generation {generation+1} - Best Score: {best_score}, Length: {best_length}, Time: {elapsed_time}s")
         
-        # Run the generation
-        snakes = run_generation_func()
+        # Run the generation with current snake population and generation number
+        snakes = run_generation_func(snakes, generation + 1)
     
     training_time = round(time.time() - training_start_time, 2)
     return best_weights, training_time

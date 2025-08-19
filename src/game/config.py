@@ -14,7 +14,7 @@ FPS = 60
 
 # Menu Constants
 MENU_WIDTH, MENU_HEIGHT = 800, 600
-BUTTON_WIDTH, BUTTON_HEIGHT = 200, 50
+BUTTON_WIDTH, BUTTON_HEIGHT = 280, 65
 
 # Manual Gameplay Constants
 MANUAL_FPS = 10
@@ -31,6 +31,8 @@ NEON_ORANGE = (255, 165, 0)  # Neon orange
 ELECTRIC_PURPLE = (138, 43, 226)  # Electric purple
 CYBER_PINK = (255, 20, 147)  # Deep pink
 MATRIX_GREEN = (0, 255, 65)  # Matrix-style green
+DARK_GREEN = (0, 120, 30)  # Dark green for text
+DARK_BLUE = (0, 30, 120)  # Dark blue for text
 
 # UI Element Colors
 UI_BORDER = NEON_CYAN
@@ -46,6 +48,47 @@ SNAKE_COLOR = NEON_GREEN
 FOOD_COLOR = CYBER_PINK
 WALL_COLOR = NEON_BLUE
 HUD_COLOR = NEON_CYAN
+
+# Glow Effect Color Variants (with alpha for transparency)
+GLOW_CYAN_OUTER = (*NEON_CYAN, 30)      # Outer glow layer
+GLOW_CYAN_INNER = (*NEON_CYAN, 80)      # Inner glow layer
+GLOW_MAGENTA_OUTER = (*NEON_MAGENTA, 30)
+GLOW_MAGENTA_INNER = (*NEON_MAGENTA, 80)
+GLOW_GREEN_OUTER = (*NEON_GREEN, 30)
+GLOW_GREEN_INNER = (*NEON_GREEN, 80)
+GLOW_BLUE_OUTER = (*NEON_BLUE, 30)
+GLOW_BLUE_INNER = (*NEON_BLUE, 80)
+GLOW_ORANGE_OUTER = (*NEON_ORANGE, 30)
+GLOW_ORANGE_INNER = (*NEON_ORANGE, 80)
+GLOW_PURPLE_OUTER = (*ELECTRIC_PURPLE, 30)
+GLOW_PURPLE_INNER = (*ELECTRIC_PURPLE, 80)
+GLOW_PINK_OUTER = (*CYBER_PINK, 30)
+GLOW_PINK_INNER = (*CYBER_PINK, 80)
+
+# Glow Parameters
+GLOW_RADIUS_OUTER = 8    # Outer glow spread
+GLOW_RADIUS_INNER = 4    # Inner glow spread
+GLOW_ALPHA_MAX = 120     # Maximum glow opacity
+GLOW_ALPHA_MIN = 30      # Minimum glow opacity
+
+# Animation Timing Constants
+PULSE_SPEED = 0.02       # Speed of pulsing animations
+SCAN_LINE_SPEED = 2.0    # Speed of scan line movement
+FADE_DURATION = 30       # Frames for fade in/out effects
+HOVER_TRANSITION = 15    # Frames for hover state transitions
+
+# Circuit Board Pattern Constants
+CIRCUIT_LINE_WIDTH = 1   # Width of circuit traces
+CIRCUIT_GRID_SIZE = 40   # Grid spacing for circuit patterns
+CIRCUIT_ALPHA = 40       # Transparency of circuit patterns
+ENERGY_PULSE_SPEED = 1.5 # Speed of energy pulses along circuits
+
+# Typography Enhancement Constants
+FONT_RETRO_LARGE = 48    # Large retro font size
+FONT_RETRO_MEDIUM = 32   # Medium retro font size
+FONT_RETRO_SMALL = 20    # Small retro font size (reduced for better button fit)
+TEXT_GLOW_OFFSET = 2     # Offset for text glow effect
+TEXT_SHADOW_ALPHA = 60   # Transparency of text shadows
 
 # Legacy color mappings for compatibility
 BACKGROUND_GRAY = DARK_BG
@@ -106,6 +149,34 @@ TRAINING_RECOMMENDATIONS = [
 LOG_FILENAME = "training_log.txt"
 BACKGROUND_IMAGE_PATH = "assets/background.webp"
 FONT_PATH = "assets/PressStart2P-Regular.ttf"
+
+# Font System Configuration
+RETRO_FONTS = [
+    "assets/PressStart2P-Regular.ttf",  # Primary retro font
+    "assets/Orbitron-Regular.ttf",     # Futuristic alternative
+    "Courier New",                      # Monospace fallback
+    "Monaco",                          # macOS monospace
+    "Consolas"                         # Windows monospace
+]
+
+# Font loading function (to be used in other modules)
+def load_retro_font(size):
+    """Load the best available retro font at specified size."""
+    import pygame
+    for font_name in RETRO_FONTS:
+        try:
+            if font_name.endswith('.ttf'):
+                # Try loading from file
+                font = pygame.font.Font(font_name, size)
+                return font
+            else:
+                # Try system font with reduced boldness
+                font = pygame.font.SysFont(font_name, size, bold=False)
+                return font
+        except:
+            continue
+    # Ultimate fallback - clean system font
+    return pygame.font.SysFont('arial', size, bold=False)
 
 # Menu Button Definitions
 MENU_BUTTONS = [
