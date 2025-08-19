@@ -29,15 +29,19 @@ def reset_training_data(generation_fitness, generation_avg_fitness,
 
 def run_training_session(snakes_per_gen, num_generations, generation_fitness,
                         generation_avg_fitness, generation_lengths, 
-                        generation_avg_lengths, run_generation_func):
-    """Run a complete AI training session."""
+                        generation_avg_lengths, run_generation_func, 
+                        enable_early_stopping=True, patience=10):
+    """Run a complete AI training session with optional early stopping."""
     # Initialize snake population
     snakes = [SnakeAI() for _ in range(snakes_per_gen)]
     print(f"Starting AI Training with {snakes_per_gen} snakes per generation for {num_generations} generations.")
+    print(f"Early stopping: {'Enabled' if enable_early_stopping else 'Disabled'}")
     print("Population size:", len(snakes))
     
     training_start_time = time.time()
     best_weights = None
+    best_fitness_ever = 0
+    generations_without_improvement = 0
     
     for generation in range(num_generations):
         # Get current generation stats
@@ -49,12 +53,38 @@ def run_training_session(snakes_per_gen, num_generations, generation_fitness,
         best_snake = max(snakes, key=lambda s: s.fitness_function(), default=None)
         if best_snake:
             best_weights = best_snake.brain.tolist()
+            current_best_fitness = best_snake.fitness_function()
+            
+            # Track improvement for early stopping
+            if current_best_fitness > best_fitness_ever:
+                best_fitness_ever = current_best_fitness
+                generations_without_improvement = 0
+            else:
+                generations_without_improvement += 1
         
         # Log generation progress
         log_and_print(f"Generation {generation+1} - Best Score: {best_score}, Length: {best_length}, Time: {elapsed_time}s")
         
         # Run the generation with current snake population and generation number
         snakes = run_generation_func(snakes, generation + 1)
+        
+        # Check for early stopping
+        if enable_early_stopping and generations_without_improvement >= patience:
+            log_and_print("=" * 50)
+            log_and_print(f" EARLY STOPPING: No improvement in {patience} generations")
+            log_and_print(f" Best fitness achieved: {best_fitness_ever:.2f}")
+            log_and_print("=" * 50)
+            break
+        
+        # Check if population has converged (using function from main.py)
+        if len(generation_fitness) >= 5:
+            from main import check_convergence
+            has_converged, improvement_rate = check_convergence(generation_fitness, generation_avg_fitness)
+            if has_converged and enable_early_stopping:
+                log_and_print("=" * 50)
+                log_and_print(f" EARLY STOPPING: Population converged (improvement rate: {improvement_rate*100:.1f}%)")
+                log_and_print("=" * 50)
+                break
     
     training_time = round(time.time() - training_start_time, 2)
     return best_weights, training_time
