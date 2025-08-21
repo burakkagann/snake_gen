@@ -110,6 +110,13 @@ saves/
 user_data/
 temp/
 
+# Documentation and planning files (keep local only)
+CLAUDE.md
+docs/
+docs/plans/
+docs/screenshots/
+docs/plans/improvement-plans/
+
 # Keep the training log as it's part of the project
 !logs/training_log.txt
 

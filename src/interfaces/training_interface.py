@@ -109,17 +109,21 @@ def draw_enhanced_recommendations_table(surface, start_y):
     font_header = load_retro_font(12)
     font_data = load_retro_font(11)
     
-    # Table title with clean rendering
+    # Calculate center based on total window width
+    total_width = WIDTH + SIDE_BAR_WIDTH
+    center_x = total_width // 2
+    
+    # Table title with clean rendering - centered on full window
     title_font = load_retro_font(14)
     title_surface = title_font.render("NEURAL TRAINING PROTOCOLS", True, NEON_CYAN)
-    title_x = WIDTH // 2 - title_surface.get_width() // 2
+    title_x = center_x - title_surface.get_width() // 2
     surface.blit(title_surface, (title_x, start_y - 25))
     
     # Table headers with optimized spacing
     headers = ["PROTOCOL", "UNITS", "CYCLES", "OPTIMIZATION TARGET"]
     header_y = start_y
-    # Column positioning with more space for protocol column
-    col_positions = [WIDTH // 2 - 320, WIDTH // 2 - 120, WIDTH // 2 - 40, WIDTH // 2 + 80]
+    # Column positioning centered on full window width
+    col_positions = [center_x - 320, center_x - 120, center_x - 40, center_x + 80]
     
     for i, header in enumerate(headers):
         # Use clean text for headers
@@ -127,7 +131,7 @@ def draw_enhanced_recommendations_table(surface, start_y):
         surface.blit(header_surface, (col_positions[i], header_y))
     
     # Add subtle column separators aligned with header positions
-    separator_positions = [WIDTH // 2 - 200, WIDTH // 2 - 65, WIDTH // 2 + 50]
+    separator_positions = [center_x - 200, center_x - 65, center_x + 50]
     for separator_x in separator_positions:
         pygame.draw.line(surface, (*NEON_CYAN, 30), 
                         (separator_x, header_y), 
@@ -192,10 +196,10 @@ def draw_training_setup_screen(surface, input_values, active_box, submit_button)
                              input_values["num_generations"], "TRAINING CYCLES", 
                              load_retro_font(16), active_box == "num_generations")
     
-    # Enhanced submit button with purple theme and thinner appearance
-    button_font = load_retro_font(10)  # Smaller font for thinner appearance
+    # Enhanced submit button with purple theme and improved readability
+    button_font = load_retro_font(12)  # Readable font size with good visibility
     draw_neon_button(surface, submit_button, "START TRAINING", button_font, 
-                    ELECTRIC_PURPLE, NEON_MAGENTA, WHITE, False, False)  # Changed to purple theme
+                    ELECTRIC_PURPLE, NEON_MAGENTA, WHITE, False, False)  # White text for maximum contrast
     
     # Enhanced recommendations table with better spacing
     table_start_y = submit_button.y + 100
