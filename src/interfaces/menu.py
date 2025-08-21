@@ -80,7 +80,7 @@ def draw_futuristic_buttons():
     
     for i, button in enumerate(MENU_BUTTONS):
         x = MENU_WIDTH // 2 - BUTTON_WIDTH // 2
-        y = MENU_HEIGHT // 2 + 40 + i * (BUTTON_HEIGHT + 20)
+        y = MENU_HEIGHT // 2 - 20 + i * (BUTTON_HEIGHT + 20)
         
         button_rect = pygame.Rect(x, y, BUTTON_WIDTH, BUTTON_HEIGHT)
         is_hovered = button_rect.collidepoint(mouse_x, mouse_y)
@@ -162,7 +162,7 @@ def menu_screen():
                 # Check button clicks with updated positions
                 for i, button in enumerate(MENU_BUTTONS):
                     x = MENU_WIDTH // 2 - BUTTON_WIDTH // 2
-                    y = MENU_HEIGHT // 2 + 40 + i * (BUTTON_HEIGHT + 20)
+                    y = MENU_HEIGHT // 2 - 20 + i * (BUTTON_HEIGHT + 20)
 
                     if x <= mouse_x <= x + BUTTON_WIDTH and y <= mouse_y <= y + BUTTON_HEIGHT:
                         return button["action"]  # Return the selected action
