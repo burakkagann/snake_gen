@@ -196,10 +196,10 @@ def draw_training_setup_screen(surface, input_values, active_box, submit_button)
                              input_values["num_generations"], "TRAINING CYCLES", 
                              load_retro_font(16), active_box == "num_generations")
     
-    # Enhanced submit button with purple theme and improved readability
-    button_font = load_retro_font(12)  # Readable font size with good visibility
+    # Enhanced submit button with orange theme matching pre-trained AI cards
+    button_font = load_retro_font(14)  # Reduced font size to fit inside button
     draw_neon_button(surface, submit_button, "START TRAINING", button_font, 
-                    ELECTRIC_PURPLE, NEON_MAGENTA, WHITE, False, False)  # White text for maximum contrast
+                    ELECTRIC_PURPLE, NEON_MAGENTA, NEON_ORANGE, False, False)  # Orange text matching pre-trained cards
     
     # Enhanced recommendations table with better spacing
     table_start_y = submit_button.y + 100

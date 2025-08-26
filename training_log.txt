@@ -2,355 +2,219 @@ Generation 1 - Best Score: 0, Length: 0, Time: 0.0s
 ==================================================
  Generation 1 Summary 
 ==================================================
- Best Fitness Score: 694.35
- Average Fitness Score: 558.94 (±71.13)
- Best Length Achieved: 34
- Average Length: 6.53
- Population Diversity: 1.411
- Success Rate: 26.7%
+ Best Fitness Score: 610.80
+ Average Fitness Score: 456.46 (±56.40)
+ Best Length Achieved: 10
+ Average Length: 1.10
+ Population Diversity: 1.423
+ Success Rate: 20.0%
 --------------------------------------------------
  Inherited Weights (Brain Parameters)
-  - Food Bonus Weight: 0.106
-  - Toward Food Weight: 0.391
-  - Away Food Penalty: -0.455
-  - Loop Penalty: -0.314
-  - Survival Bonus: -0.473
-  - Wall Penalty: -0.306
-  - Exploration Bonus: 0.300
-  - Momentum Bonus: -0.349
-  - Dead-End Penalty: -0.021
+  - Food Bonus Weight: 0.109
+  - Toward Food Weight: 0.338
+  - Away Food Penalty: -0.354
+  - Loop Penalty: -0.444
+  - Survival Bonus: -0.336
+  - Wall Penalty: -0.338
+  - Exploration Bonus: 0.317
+  - Momentum Bonus: 0.184
+  - Dead-End Penalty: 0.436
 ==================================================
-Generation 2 - Best Score: 0, Length: 0, Time: 30.61s
+Generation 2 - Best Score: 0, Length: 0, Time: 10.04s
 ==================================================
  Generation 2 Summary 
 ==================================================
- Best Fitness Score: 753.95
- Average Fitness Score: 649.43 (±77.72)
- Best Length Achieved: 33
- Average Length: 10.40
- Population Diversity: 1.529
- Success Rate: 46.7%
+ Best Fitness Score: 687.44
+ Average Fitness Score: 517.63 (±81.99)
+ Best Length Achieved: 31
+ Average Length: 6.10
+ Population Diversity: 1.543
+ Success Rate: 30.0%
 --------------------------------------------------
  Inherited Weights (Brain Parameters)
-  - Food Bonus Weight: -0.025
-  - Toward Food Weight: 0.519
-  - Away Food Penalty: -0.433
-  - Loop Penalty: -0.314
-  - Survival Bonus: -0.574
-  - Wall Penalty: -0.306
-  - Exploration Bonus: 0.300
-  - Momentum Bonus: -0.349
-  - Dead-End Penalty: -0.021
+  - Food Bonus Weight: -0.308
+  - Toward Food Weight: 0.592
+  - Away Food Penalty: -0.256
+  - Loop Penalty: 0.214
+  - Survival Bonus: 0.269
+  - Wall Penalty: -0.164
+  - Exploration Bonus: -0.330
+  - Momentum Bonus: -0.485
+  - Dead-End Penalty: -0.036
 ==================================================
-Generation 3 - Best Score: 0, Length: 0, Time: 75.88s
+Generation 3 - Best Score: 0, Length: 0, Time: 28.3s
 ==================================================
  Generation 3 Summary 
 ==================================================
- Best Fitness Score: 912.44
- Average Fitness Score: 782.00 (±74.32)
- Best Length Achieved: 61
- Average Length: 26.20
- Population Diversity: 1.180
- Success Rate: 86.7%
+ Best Fitness Score: 823.45
+ Average Fitness Score: 678.79 (±100.03)
+ Best Length Achieved: 50
+ Average Length: 19.80
+ Population Diversity: 1.265
+ Success Rate: 60.0%
 --------------------------------------------------
  Inherited Weights (Brain Parameters)
-  - Food Bonus Weight: -0.025
-  - Toward Food Weight: 0.519
-  - Away Food Penalty: -0.433
-  - Loop Penalty: -0.314
-  - Survival Bonus: -0.574
-  - Wall Penalty: -0.306
-  - Exploration Bonus: 0.497
-  - Momentum Bonus: -0.349
-  - Dead-End Penalty: -0.021
+  - Food Bonus Weight: -0.308
+  - Toward Food Weight: 0.592
+  - Away Food Penalty: -0.256
+  - Loop Penalty: 0.214
+  - Survival Bonus: 0.269
+  - Wall Penalty: -0.164
+  - Exploration Bonus: -0.330
+  - Momentum Bonus: -0.485
+  - Dead-End Penalty: -0.036
 ==================================================
-Generation 4 - Best Score: 0, Length: 0, Time: 133.71s
+Generation 4 - Best Score: 0, Length: 0, Time: 70.59s
 ==================================================
  Generation 4 Summary 
 ==================================================
- Best Fitness Score: 827.08
- Average Fitness Score: 764.08 (±62.67)
- Best Length Achieved: 50
- Average Length: 26.33
- Population Diversity: 0.990
- Success Rate: 86.7%
---------------------------------------------------
- Inherited Weights (Brain Parameters)
-  - Food Bonus Weight: -0.113
-  - Toward Food Weight: 0.519
-  - Away Food Penalty: -0.557
-  - Loop Penalty: -0.314
-  - Survival Bonus: -0.574
-  - Wall Penalty: -0.306
-  - Exploration Bonus: 0.300
-  - Momentum Bonus: -0.349
-  - Dead-End Penalty: -0.021
-==================================================
-Generation 5 - Best Score: 0, Length: 0, Time: 188.39s
-==================================================
- Generation 5 Summary 
-==================================================
- Best Fitness Score: 941.53
- Average Fitness Score: 802.22 (±76.05)
- Best Length Achieved: 71
- Average Length: 32.27
- Population Diversity: 1.282
- Success Rate: 86.7%
---------------------------------------------------
- Inherited Weights (Brain Parameters)
-  - Food Bonus Weight: 0.365
-  - Toward Food Weight: 0.150
-  - Away Food Penalty: 0.018
-  - Loop Penalty: 0.006
-  - Survival Bonus: -0.299
-  - Wall Penalty: -0.366
-  - Exploration Bonus: -0.024
-  - Momentum Bonus: 0.082
-  - Dead-End Penalty: -0.170
-==================================================
-Generation 6 - Best Score: 0, Length: 0, Time: 258.94s
-==================================================
- Generation 6 Summary 
-==================================================
- Best Fitness Score: 919.51
- Average Fitness Score: 815.58 (±82.19)
- Best Length Achieved: 60
- Average Length: 34.07
- Population Diversity: 1.233
- Success Rate: 86.7%
---------------------------------------------------
- Inherited Weights (Brain Parameters)
-  - Food Bonus Weight: 0.000
-  - Toward Food Weight: 1.102
-  - Away Food Penalty: -0.196
-  - Loop Penalty: -0.314
-  - Survival Bonus: 0.084
-  - Wall Penalty: -0.382
-  - Exploration Bonus: 0.370
-  - Momentum Bonus: 0.155
-  - Dead-End Penalty: -0.075
-==================================================
-Generation 7 - Best Score: 0, Length: 0, Time: 325.56s
-==================================================
- Generation 7 Summary 
-==================================================
- Best Fitness Score: 919.42
- Average Fitness Score: 823.89 (±63.04)
- Best Length Achieved: 62
- Average Length: 37.07
- Population Diversity: 1.626
- Success Rate: 93.3%
---------------------------------------------------
- Inherited Weights (Brain Parameters)
-  - Food Bonus Weight: -0.018
-  - Toward Food Weight: 0.249
-  - Away Food Penalty: -0.433
-  - Loop Penalty: -0.129
-  - Survival Bonus: -0.650
-  - Wall Penalty: -0.358
-  - Exploration Bonus: 1.494
-  - Momentum Bonus: -0.860
-  - Dead-End Penalty: -0.170
-==================================================
-Generation 8 - Best Score: 0, Length: 0, Time: 400.01s
-==================================================
- Generation 8 Summary 
-==================================================
- Best Fitness Score: 889.91
- Average Fitness Score: 760.24 (±82.58)
- Best Length Achieved: 49
- Average Length: 22.33
- Population Diversity: 1.567
- Success Rate: 73.3%
---------------------------------------------------
- Inherited Weights (Brain Parameters)
-  - Food Bonus Weight: -0.264
-  - Toward Food Weight: 0.845
-  - Away Food Penalty: -0.525
-  - Loop Penalty: -0.479
-  - Survival Bonus: -1.003
-  - Wall Penalty: -0.350
-  - Exploration Bonus: 0.397
-  - Momentum Bonus: -0.314
-  - Dead-End Penalty: -0.170
-==================================================
-Generation 9 - Best Score: 0, Length: 0, Time: 458.27s
-==================================================
- Generation 9 Summary 
-==================================================
- Best Fitness Score: 971.56
- Average Fitness Score: 794.28 (±91.88)
- Best Length Achieved: 86
- Average Length: 32.13
- Population Diversity: 1.621
+ Best Fitness Score: 780.45
+ Average Fitness Score: 674.88 (±86.56)
+ Best Length Achieved: 44
+ Average Length: 18.90
+ Population Diversity: 0.904
  Success Rate: 80.0%
 --------------------------------------------------
  Inherited Weights (Brain Parameters)
-  - Food Bonus Weight: -0.018
-  - Toward Food Weight: 0.249
-  - Away Food Penalty: -0.336
-  - Loop Penalty: 0.006
-  - Survival Bonus: -0.315
-  - Wall Penalty: -0.101
-  - Exploration Bonus: 0.314
-  - Momentum Bonus: -0.860
-  - Dead-End Penalty: -0.170
+  - Food Bonus Weight: -0.293
+  - Toward Food Weight: 0.592
+  - Away Food Penalty: -0.367
+  - Loop Penalty: 0.184
+  - Survival Bonus: -0.207
+  - Wall Penalty: 0.605
+  - Exploration Bonus: 0.513
+  - Momentum Bonus: -0.485
+  - Dead-End Penalty: -0.036
 ==================================================
-Generation 10 - Best Score: 0, Length: 0, Time: 544.89s
+Generation 5 - Best Score: 0, Length: 0, Time: 104.93s
+==================================================
+ Generation 5 Summary 
+==================================================
+ Best Fitness Score: 900.97
+ Average Fitness Score: 745.12 (±95.15)
+ Best Length Achieved: 65
+ Average Length: 26.00
+ Population Diversity: 1.365
+ Success Rate: 70.0%
+--------------------------------------------------
+ Inherited Weights (Brain Parameters)
+  - Food Bonus Weight: 0.487
+  - Toward Food Weight: 0.592
+  - Away Food Penalty: 0.044
+  - Loop Penalty: 0.031
+  - Survival Bonus: 0.087
+  - Wall Penalty: -0.159
+  - Exploration Bonus: 0.000
+  - Momentum Bonus: 0.961
+  - Dead-End Penalty: -0.008
+==================================================
+Generation 6 - Best Score: 0, Length: 0, Time: 158.16s
+==================================================
+ Generation 6 Summary 
+==================================================
+ Best Fitness Score: 796.22
+ Average Fitness Score: 704.76 (±80.57)
+ Best Length Achieved: 43
+ Average Length: 23.60
+ Population Diversity: 1.305
+ Success Rate: 90.0%
+--------------------------------------------------
+ Inherited Weights (Brain Parameters)
+  - Food Bonus Weight: 0.487
+  - Toward Food Weight: 0.592
+  - Away Food Penalty: 0.586
+  - Loop Penalty: -0.380
+  - Survival Bonus: 0.101
+  - Wall Penalty: -0.164
+  - Exploration Bonus: 0.000
+  - Momentum Bonus: 0.961
+  - Dead-End Penalty: -0.069
+==================================================
+Generation 7 - Best Score: 0, Length: 0, Time: 197.69s
+==================================================
+ Generation 7 Summary 
+==================================================
+ Best Fitness Score: 838.94
+ Average Fitness Score: 666.00 (±105.01)
+ Best Length Achieved: 54
+ Average Length: 17.00
+ Population Diversity: 1.566
+ Success Rate: 50.0%
+--------------------------------------------------
+ Inherited Weights (Brain Parameters)
+  - Food Bonus Weight: 0.487
+  - Toward Food Weight: 0.514
+  - Away Food Penalty: 0.217
+  - Loop Penalty: -0.101
+  - Survival Bonus: 0.533
+  - Wall Penalty: -0.308
+  - Exploration Bonus: 0.000
+  - Momentum Bonus: 0.763
+  - Dead-End Penalty: -0.008
+==================================================
+Generation 8 - Best Score: 0, Length: 0, Time: 241.25s
+==================================================
+ Generation 8 Summary 
+==================================================
+ Best Fitness Score: 857.27
+ Average Fitness Score: 774.50 (±84.01)
+ Best Length Achieved: 41
+ Average Length: 27.70
+ Population Diversity: 1.200
+ Success Rate: 80.0%
+--------------------------------------------------
+ Inherited Weights (Brain Parameters)
+  - Food Bonus Weight: 0.487
+  - Toward Food Weight: 0.514
+  - Away Food Penalty: 0.039
+  - Loop Penalty: -0.242
+  - Survival Bonus: -0.026
+  - Wall Penalty: 0.239
+  - Exploration Bonus: 0.236
+  - Momentum Bonus: -0.491
+  - Dead-End Penalty: 0.357
+==================================================
+Generation 9 - Best Score: 0, Length: 0, Time: 295.48s
+==================================================
+ Generation 9 Summary 
+==================================================
+ Best Fitness Score: 859.09
+ Average Fitness Score: 772.91 (±71.38)
+ Best Length Achieved: 51
+ Average Length: 31.30
+ Population Diversity: 1.311
+ Success Rate: 90.0%
+--------------------------------------------------
+ Inherited Weights (Brain Parameters)
+  - Food Bonus Weight: 0.566
+  - Toward Food Weight: 0.985
+  - Away Food Penalty: 0.044
+  - Loop Penalty: -0.021
+  - Survival Bonus: -0.080
+  - Wall Penalty: -0.489
+  - Exploration Bonus: 0.270
+  - Momentum Bonus: 1.021
+  - Dead-End Penalty: -0.008
+==================================================
+Generation 10 - Best Score: 0, Length: 0, Time: 345.32s
 ==================================================
  Generation 10 Summary 
 ==================================================
- Best Fitness Score: 927.46
- Average Fitness Score: 786.68 (±95.02)
- Best Length Achieved: 64
- Average Length: 30.73
- Population Diversity: 1.457
- Success Rate: 73.3%
---------------------------------------------------
- Inherited Weights (Brain Parameters)
-  - Food Bonus Weight: -0.264
-  - Toward Food Weight: 0.865
-  - Away Food Penalty: 0.196
-  - Loop Penalty: -0.334
-  - Survival Bonus: -1.524
-  - Wall Penalty: -0.166
-  - Exploration Bonus: 1.899
-  - Momentum Bonus: -0.818
-  - Dead-End Penalty: -0.170
-==================================================
-Generation 11 - Best Score: 0, Length: 0, Time: 612.92s
-==================================================
- Generation 11 Summary 
-==================================================
- Best Fitness Score: 927.52
- Average Fitness Score: 831.98 (±40.32)
- Best Length Achieved: 64
- Average Length: 37.40
- Population Diversity: 1.316
+ Best Fitness Score: 864.69
+ Average Fitness Score: 770.17 (±44.65)
+ Best Length Achieved: 57
+ Average Length: 31.80
+ Population Diversity: 1.310
  Success Rate: 100.0%
 --------------------------------------------------
  Inherited Weights (Brain Parameters)
-  - Food Bonus Weight: -0.354
-  - Toward Food Weight: 0.961
-  - Away Food Penalty: -0.326
-  - Loop Penalty: -0.129
-  - Survival Bonus: 0.457
-  - Wall Penalty: -0.261
-  - Exploration Bonus: 1.011
-  - Momentum Bonus: -0.674
-  - Dead-End Penalty: -0.533
-==================================================
-Generation 12 - Best Score: 0, Length: 0, Time: 684.06s
-==================================================
- Generation 12 Summary 
-==================================================
- Best Fitness Score: 935.59
- Average Fitness Score: 835.21 (±65.77)
- Best Length Achieved: 68
- Average Length: 40.53
- Population Diversity: 1.407
- Success Rate: 93.3%
---------------------------------------------------
- Inherited Weights (Brain Parameters)
-  - Food Bonus Weight: 0.066
-  - Toward Food Weight: 0.845
-  - Away Food Penalty: -0.975
-  - Loop Penalty: -0.129
-  - Survival Bonus: -0.363
-  - Wall Penalty: -0.242
-  - Exploration Bonus: 1.008
-  - Momentum Bonus: -0.426
-  - Dead-End Penalty: -0.170
-==================================================
-Generation 13 - Best Score: 0, Length: 0, Time: 758.76s
-==================================================
- Generation 13 Summary 
-==================================================
- Best Fitness Score: 947.51
- Average Fitness Score: 812.63 (±85.24)
- Best Length Achieved: 74
- Average Length: 38.67
- Population Diversity: 1.327
- Success Rate: 86.7%
---------------------------------------------------
- Inherited Weights (Brain Parameters)
-  - Food Bonus Weight: 0.066
-  - Toward Food Weight: 0.845
-  - Away Food Penalty: -0.975
-  - Loop Penalty: -0.129
-  - Survival Bonus: -0.194
-  - Wall Penalty: -0.242
-  - Exploration Bonus: 1.011
-  - Momentum Bonus: -0.092
-  - Dead-End Penalty: -0.100
-==================================================
-Generation 14 - Best Score: 0, Length: 0, Time: 842.56s
-==================================================
- Generation 14 Summary 
-==================================================
- Best Fitness Score: 967.53
- Average Fitness Score: 834.04 (±67.86)
- Best Length Achieved: 84
- Average Length: 44.40
- Population Diversity: 1.352
- Success Rate: 93.3%
---------------------------------------------------
- Inherited Weights (Brain Parameters)
-  - Food Bonus Weight: -0.080
-  - Toward Food Weight: 0.845
-  - Away Food Penalty: -0.404
-  - Loop Penalty: -0.203
-  - Survival Bonus: -0.412
-  - Wall Penalty: -0.237
-  - Exploration Bonus: 0.227
-  - Momentum Bonus: -1.118
-  - Dead-End Penalty: -0.170
-==================================================
-Generation 15 - Best Score: 0, Length: 0, Time: 946.57s
-==================================================
- Generation 15 Summary 
-==================================================
- Best Fitness Score: 899.38
- Average Fitness Score: 844.68 (±35.79)
- Best Length Achieved: 52
- Average Length: 39.20
- Population Diversity: 1.176
- Success Rate: 100.0%
---------------------------------------------------
- Inherited Weights (Brain Parameters)
-  - Food Bonus Weight: 0.066
-  - Toward Food Weight: 1.077
-  - Away Food Penalty: 0.423
-  - Loop Penalty: 0.428
-  - Survival Bonus: -0.443
-  - Wall Penalty: -0.137
-  - Exploration Bonus: -0.210
-  - Momentum Bonus: 0.224
-  - Dead-End Penalty: -0.111
-==================================================
-Generation 16 - Best Score: 0, Length: 0, Time: 1015.67s
-==================================================
- Generation 16 Summary 
-==================================================
- Best Fitness Score: 921.47
- Average Fitness Score: 810.14 (±75.35)
- Best Length Achieved: 61
- Average Length: 34.33
- Population Diversity: 1.557
- Success Rate: 86.7%
---------------------------------------------------
- Inherited Weights (Brain Parameters)
-  - Food Bonus Weight: -0.080
-  - Toward Food Weight: 0.975
-  - Away Food Penalty: -0.218
-  - Loop Penalty: -0.075
-  - Survival Bonus: -0.412
-  - Wall Penalty: -0.237
-  - Exploration Bonus: 0.227
-  - Momentum Bonus: -1.118
-  - Dead-End Penalty: -0.170
-==================================================
-==================================================
- EARLY STOPPING: No improvement in 10 generations
- Best fitness achieved: 150.10
+  - Food Bonus Weight: 0.566
+  - Toward Food Weight: 0.985
+  - Away Food Penalty: 0.044
+  - Loop Penalty: -0.021
+  - Survival Bonus: -0.080
+  - Wall Penalty: -0.489
+  - Exploration Bonus: 0.270
+  - Momentum Bonus: 1.021
+  - Dead-End Penalty: -0.008
 ==================================================

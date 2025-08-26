@@ -267,7 +267,7 @@ def show_futuristic_game_over_screen(snake):
         # Mission stats with enhanced styling
         stats_data = [
             ("MISSION DURATION", f"{elapsed_time:.1f}s"),
-            ("TARGETS ACQUIRED", str(snake.score)),
+            ("TARGETS ACQUIRED", f"{float(snake.score):.2f}"),
             ("FINAL LENGTH", str(snake.length)),
             ("STATUS", "TERMINATED")
         ]

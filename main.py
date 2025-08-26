@@ -225,7 +225,7 @@ def show_game_over_screen(snake, mode="manual"):
     elapsed_time = round(time.time() - snake.start_time, 2)
     stats_text = [
         f"Time: {elapsed_time}s",
-        f"Score: {snake.score}",
+        f"Score: {float(snake.score):.2f}",
         f"Length: {snake.length}"
     ]
 
@@ -315,7 +315,7 @@ def show_pretrained_game_over_screen(snake):
         # Enhanced mission statistics with separate colors for headers and values
         stats_data = [
             ("MISSION DURATION", f"{elapsed_time:.1f}s", NEON_ORANGE, NEON_CYAN),
-            ("FINAL SCORE", str(snake.score), NEON_ORANGE, NEON_GREEN),
+            ("FINAL SCORE", f"{float(snake.score):.2f}", NEON_ORANGE, NEON_GREEN),
             ("SNAKE LENGTH", str(snake.length), NEON_ORANGE, NEON_BLUE),
             ("STATUS", "TERMINATED", NEON_ORANGE, UI_DANGER)
         ]
@@ -409,7 +409,7 @@ def show_training_summary(best_score, best_length, training_time):
         # Enhanced training statistics with separate colors for headers and values
         stats_data = [
             ("TRAINING DURATION", f"{training_time:.1f}s", NEON_ORANGE, NEON_CYAN),
-            ("BEST SCORE ACHIEVED", str(best_score_overall), NEON_ORANGE, NEON_GREEN),
+            ("BEST SCORE ACHIEVED", f"{float(best_score_overall):.2f}", NEON_ORANGE, NEON_GREEN),
             ("LONGEST LENGTH", str(best_length_overall), NEON_ORANGE, NEON_BLUE),
             ("STATUS", "COMPLETE", NEON_ORANGE, UI_SUCCESS)
         ]
